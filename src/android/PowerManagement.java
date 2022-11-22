@@ -98,8 +98,7 @@ public class PowerManagement extends CordovaPlugin {
 		this.powerManager = (PowerManager) cordova.getActivity().getSystemService(Context.POWER_SERVICE);
 
 		handler = new Handler();
-	    wakeupIntent = PendingIntent.getBroadcast( context , 0,
-	        new Intent("com.android.internal.location.ALARM_WAKEUP"), 0);
+	    wakeupIntent = PendingIntent.getBroadcast( context , 0, new Intent("com.android.internal.location.ALARM_WAKEUP"), 33554432);
 
 	}
 
@@ -117,16 +116,15 @@ public class PowerManagement extends CordovaPlugin {
 					Log.d("PowerManagementPlugin", "Only dim lock" );
 					result = this.acquire( PowerManager.SCREEN_DIM_WAKE_LOCK );
 					handler.postDelayed(heartbeat, 10000);					   
-				}
-				else {
+				} else if (args.length() > 1 && args.getBoolean(1) ) {
+					Log.d("PowerManagementPlugin", "Partial wake lock" );
+					result = this.acquire( PowerManager.PARTIAL_WAKE_LOCK );
+					handler.postDelayed(heartbeat, 10000); 
+				} else {
 					Log.d("PowerManagementPlugin", "Full wake lock" );
 					result = this.acquire( PowerManager.FULL_WAKE_LOCK );
 					handler.postDelayed(heartbeat, 10000);
 				}
-			} else if( action.equals("partial") ) {
-			 	Log.d("PowerManagementPlugin", "Partial wake lock" );
-				result = this.acquire( PowerManager.PARTIAL_WAKE_LOCK );
-			handler.postDelayed(heartbeat, 10000); 
 			} else if( action.equals("release") ) {
 				result = this.release();
 			} else if( action.equals("setReleaseOnPause") ) {

@@ -35,7 +35,7 @@ PowerManagement.prototype.acquire = function(successCallback,failureCallback, ru
  * @param errorCallback function to be called when there was a problem with acquiring the wake-lock
  */
 PowerManagement.prototype.partial = function(successCallback,failureCallback) { 
-    cordova.exec(successCallback, failureCallback, 'PowerManagement', 'partial', false);
+    cordova.exec(successCallback, failureCallback, 'PowerManagement', 'acquire', [false, true]);
 }
 
 

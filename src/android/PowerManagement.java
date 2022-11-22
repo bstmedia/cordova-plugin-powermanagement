@@ -119,7 +119,9 @@ public class PowerManagement extends CordovaPlugin {
 					handler.postDelayed(heartbeat, 10000);					   
 				}
 				else {
+					Log.d("PowerManagementPlugin", "Full wake lock" );
 					result = this.acquire( PowerManager.FULL_WAKE_LOCK );
+					handler.postDelayed(heartbeat, 10000);
 				}
 			} else if( action.equals("release") ) {
 				result = this.release();
@@ -197,6 +199,7 @@ public class PowerManagement extends CordovaPlugin {
 	@Override
 	public void onPause(boolean multitasking) {
 		if( this.releaseOnPause && this.wakeLock != null ) {
+			Log.d("PowerManagementPlugin", "Wake lock pause release" );
 			this.wakeLock.release();
 		}
 
@@ -209,6 +212,7 @@ public class PowerManagement extends CordovaPlugin {
 	@Override
 	public void onResume(boolean multitasking) {
 		if( this.releaseOnPause && this.wakeLock != null ) {
+			Log.d("PowerManagementPlugin", "Wake lock resume acquire" );
 			this.wakeLock.acquire();
 		}
 

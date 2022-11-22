@@ -123,7 +123,11 @@ public class PowerManagement extends CordovaPlugin {
 					result = this.acquire( PowerManager.FULL_WAKE_LOCK );
 					handler.postDelayed(heartbeat, 10000);
 				}
-			} else if( action.equals("release") ) {
+			} else if( action.equals("partial") ) {
+			 	Log.d("PowerManagementPlugin", "Partial wake lock" );
+				result = this.acquire( PowerManager.PARTIAL_WAKE_LOCK );
+				handler.postDelayed(heartbeat, 10000);
+			else if( action.equals("release") ) {
 				result = this.release();
 			} else if( action.equals("setReleaseOnPause") ) {
 				try {
